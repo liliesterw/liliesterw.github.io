@@ -1,0 +1,42 @@
+[{
+	"values":[
+	{
+		"ele":100,
+		"rate":100,
+		"type":"c1"
+	},
+	{
+		"ele":100,
+		"rate":25,
+		"type":"c2"
+	},
+	{
+		"ele":100,
+		"rate":50,
+		"type":"c4"
+	}],
+	"total": 300,
+	"year": 2015
+		
+},
+{
+	"values":[
+	{
+		"ele":50,
+		"rate":10,
+		"type":"c1"
+	},
+	{
+		"ele":35,
+		"rate":30,
+		"type":"c2"
+	},
+	{
+		"ele":15,
+		"rate":80,
+		"type":"c4"
+	}],
+
+	"total": 100,
+	"year": 2016
+}]

@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Airbnb vs Rent</title>
+  <link rel="stylesheet" type="text/css" href="assets/css/rangeslider.css">
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css" >
+  
+  <!-- Icon -->
+  <link rel="stylesheet" type="text/css" href="assets/fonts/line-icons.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+  
+  <!-- Slicknav -->
+  <link rel="stylesheet" type="text/css" href="assets/css/slicknav.css">
+  
+  <!-- Nivo Lightbox -->
+  <link rel="stylesheet" type="text/css" href="assets/css/nivo-lightbox.css" >
+
+  <!-- Animate -->
+  <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
+  
+  <!-- Main Style -->
+  <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+  
+  <!-- Responsive Style -->
+  <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
+
+  <!-- D3 CSS Library -->
+  <link rel="stylesheet" type="text/css" href="d3/css/multiline.css">
+  <link rel="stylesheet" type="text/css" href="d3/css/map1.css">
+  <link rel="stylesheet" type="text/css" href="d3/css/heatmap.css">
+  
+  <!-- D3 JS Library -->
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="http://d3js.org/queue.v1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+
+  <!-- D3 CUSTOM JS Library -->
+  <script src="d3/js/liquidFillGauge.js" language="JavaScript"></script>
+  <script src="assets/js/rangeslider.min.js"></script>
+  <script src="d3/js/d3ProgressBar.js"></script>
+  <script src="d3/js/multiline.js"></script>
+  <script src="d3/js/heatmap.js"></script>
+  <script src="d3/js/clusterpurityChart.js"></script>
+  <script type="text/javascript" src="d3/js/map.js"></script>
+  <script type="text/javascript" src="d3/js/map1.js"></script>
+  <!-- <script src="http://d3js.org/topojson.v1.min.js"></script> -->
+
+
+
+</head>
+<style>
+  #content {
+    margin: auto;
+    padding: 20px;
+    width: 805px;
+
+  }
+
+  #map {
+    margin: 10px 0px 0px 0px;
+    padding: 0px;
+  }
+  #map1 {
+    margin: 10px 0px 0px 0px;
+    padding: 0px;
+  }
+
+  .county {
+    fill: white;
+  }
+
+  .states {
+    fill: none;
+    stroke: white;
+    stroke-linejoin: round;
+  }
+
+  input {
+    display: block;
+    width: 200px;
+    margin: auto;
+  }
+
+  #legend text {
+    font-size: 0.9em;
+    color: white;
+    font-weight: 400;
+  }
+
+  .tooltip {
+    position: absolute;
+    padding: 7px;
+    font-size: 0.9em;
+    pointer-events: none;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+    -moz-box-shadow:    3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+    box-shadow:         3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .tooltip p {
+    margin: 0;
+    padding: 0;
+  }
+
+  .tooltip table {
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+  }
+
+  .tooltip-circle {
+    position: absolute;
+    padding: 7px;
+    font-size: 0.9em;
+    pointer-events: none;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+    -moz-box-shadow:    3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+    box-shadow:         3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .tooltip-circle p {
+    margin: 0;
+    padding: 0;
+  }
+
+  .tooltip-circle table {
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+  }
+
+  .tooltipLiquid {
+    position: absolute;
+    padding: 7px;
+    font-size: 0.9em;
+    pointer-events: none;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+    -moz-box-shadow:    3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+    box-shadow:         3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .tooltipLiquid p {
+    margin: 0;
+    padding: 0;
+  }
+
+  .tooltipLiquid table {
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+  }
+
+  .wide {
+    width: 140px;
+  }
+  .slider {
+    -webkit-appearance: none;
+    margin: auto;
+    width: 300px;
+    height: 2px;
+    border-radius: 5px;   
+    background: grey;
+    outline: none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%; 
+    background: red;
+    cursor: pointer;
+  }
+
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #E81E62;
+    border-color: #E81E62;
+    cursor: pointer;
+  }
+
+</style>
+<script>
+  $('input[type="range"]').rangeslider();
+  $('input[type="range"]').rangeslider('destroy');
+  $('input[type="range"]').rangeslider('update', true);
+</script>
+<body>
+
+  <!-- Header Starts -->
+  <header id="header-wrap">
+    <div id="main-slide" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <!-- <li data-target="#main-slide" data-slide-to="0" class="active"></li> -->
+       <!--  <li data-target="#main-slide" data-slide-to="1"></li>
+        <li data-target="#main-slide" data-slide-to="2"></li> -->
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img class="d-block w-100" src="assets/img/slider/slide2.jpg" alt="First slide">
+          <div class="carousel-caption d-md-block">
+            <h1 class="wow fadeInDown heading" data-wow-delay=".4s">AIRBNB VS. RENT</h1>
+            <p class="fadeInUp wow" data-wow-delay=".6s">MELBOURNE - AUSTRALIA</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#main-slide" role="button" data-slide="prev">
+      <span class="carousel-control" aria-hidden="true"><i class="lni-chevron-left"></i></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#main-slide" role="button" data-slide="next">
+      <span class="carousel-control" aria-hidden="true"><i class="lni-chevron-right"></i></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </header>
+  <!-- Header End -->
+
+  <!-- ABC NEWS Start-->
+  <section id="pricing" class="section-padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-10">
+          <div class="section-title-header text-center">
+            <h1 class="section-title wow fadeInUp" data-wow-delay="0.2s">
+              <a href="https://www.abc.net.au/news/2018-02-23/entire-homes-commercial-listings-have-surged-on-airbnb/9473368" style="color:white"> ABC NEWS</a></h1>
+            <p class="wow fadeInDown" data-wow-delay="0.4s">
+              <div class="wow fadeInUp">
+                <a href="https://www.abc.net.au/news/2018-02-23/entire-homes-commercial-listings-have-surged-on-airbnb/9473368" style="color:inherit">
+                <h1 style="color:white">Airbnb in Australia: Entire homes, commercial listings 'surge' amid growing concerns</h1>
+                <h4><br>Airbnb rarely releases its own data, but the independent monitoring website Inside Airbnb — set up by New York-based Australian Murray Cox — has released its latest analysis of the platform's public listings.</h4>
+                <br>
+                <h4>There has been an <b style="color:#ededed">87% rise in total listings across Australia in the past 12 months.</b></h4>
+                <h4>There's also been a <u style="color:#9e9e9e">massive jump </u>in the number of entire homes available — from <b style="color:#9e9e9e"> 43,610 in 2016 to 89,863 in December 2017 </b>, making up nearly 70 per cent of all listings, according to Inside Airbnb.</h4>
+                <h4>In <u style="color:#ededed">Melbourne</u>, more than <b style="color:#ededed">12,474 entire homes </b> are available for booking, making up <b style="color:#ededed">60% of all listings.</b></h4>
+              </div>
+            </a>
+            </p>
+          </div>
+        </div>
+        <div class="col-1">
+        </div>
+      </div>
+      <div class="row">
+      </div>
+    </div>
+  </section>
+  <!-- ABC NEWS End-->
+
+  <!-- Question 1 Start -->
+  <section class="countdown-timer section-padding">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="heading-count">
+            <h2 class="wow fadeInDown" data-wow-delay="0.2s">DO YOU BELIEVE THAT THE AIRBNB's LISTINGS INCREASED BY 87% ?</h2>
+            <br><br><br><br>
+            <a class="fadeInLeft wow btn btn-common btn-lg" data-wow-delay=".6s" onclick="moveProgressBar(1)"><h4 style="color:white ; margin:auto;"> YES</h4></a>
+            <a  class="fadeInRight wow btn btn-common btn-lg" data-wow-delay=".6s" onclick="moveProgressBar(0)"> <h4 style="color:white ; margin:auto;"> NO</h4></a>
+            <br><br>
+            <!-- D3 Bar -->
+            <div style="text-align:center;">
+              <div class = "wow fadeInUp text-center"  style="text-align: center">
+                <br>
+
+                <h2  class="progressText" style="visibility: hidden; display: block; margin:auto">People say Yes : </h2>
+                <h4  class="progressText2" id="progressText2"style="visibility: hidden; display: block; margin:auto; color:grey"></h4>
+
+                <div class="progress" style="height: 54px; width:301.5px; visibility: hidden; display: block; margin:auto">
+                </div>
+              </div>
+            </div>
+            <br><br><br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Question 1 End -->
+
+
+  <!-- INCREASE PERCENTAGE Start-->
+  <section  class="schedule section-padding" style="background-color: #FAF7F7">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="section-title-header text-center">
+            <h1 class="section-title wow fadeInUp" data-wow-delay="0.2s">INCREASING PERCENTAGE</h1>
+            <div class="wow fadeInDown" data-wow-delay="0.2s"><h6 style="color:#E81F62">Discover the chart below <i class="fas fa-hand-point-down"></i> <i class="fas fa-hand-point-down"></i></h6></div>
+            <br><br>
+            <div class="row">
+              <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+               <div class="chart-wrapper" id="chart-line1"></div>
+             </div>
+             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+              <div class="chart-wrapper-header">
+                <h3 class="chart-wrapper-info">
+                 <i class="fab fa-airbnb"></i> Listing increased by <b class="chart-wrapper-listing" style="background-color: pink"></b> , while  tourist increased by <b class="chart-wrapper-tourist" style="background-color: pink"></b> from 
+                  <u class="chart-wrapper-year"></u>
+                </h3>
+              </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- INCREASE PERCENTAGE End-->
+
+  <!-- Increase Total Percentage Start-->
+  <section id="pricing" class="schedule section-padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="section-title-header text-center">
+            <h1 class="section-title wow fadeInUp" data-wow-delay="0.2s">TOTAL LISTING AND ITS OCCUPATION RATE</h1>
+            <div class="wow fadeInDown" data-wow-delay="0.2s" >
+              <h4 style="color:white">From 2015 to 2019
+            </h4>
+            <br><br>
+            <svg id="fillgauge1" width="54" height="240"></svg>
+            <svg id="fillgauge2" width="86" height="240"></svg>
+            <svg id="fillgauge3" width="143" height="240"></svg>
+            <svg id="fillgauge4" width="204" height="240"></svg>
+            <svg id="fillgauge5" width="229" height="240"></svg>
+            <br><br><br>
+            
+            <h4 style="color:#D3AB6A"><i class="far fa-circle fa-2x" style="color:#D3AB6A"></i> : Number of listing</h4>
+            <h4 style="color:#D3AB6A"><i class="fas fa-tint fa-2x" style="color:#D3AB6A"></i> : Occupation rate</h4>
+            <br><br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Increase Total Percentage End-->
+
+  <!-- Occupation Rate By Month Start -->
+  <section id="pricing" class="schedule section-padding" style="background-image: url('');background-color:#302f2f">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="section-title-header text-center">
+            <h1 class="section-title wow fadeInUp" data-wow-delay="0.2s">Occupation Rate by Months</h1>
+            <p class="wow fadeInDown" data-wow-delay="0.2s" >Highest Occupation Rate : June, 2016 : 80% <br>Lowest Occupation Rate : April, 2018 : 35%</p>
+
+          </div>
+          <div class="row">
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+              <Br>
+              <div class="chart" id ="chart" style="text-align:right"></div>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="vertical-align: center; margin:auto">
+
+              <h2 id="info" style="display: inline-block; color:white">hover the chart</h2>
+
+
+
+            </div>
+
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+</section>
+<!-- Occupation Rate By Month End -->
+
+
+<!-- Shifting Start -->
+<section id="pricing" class="schedule section-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="section-title-header text-center">
+          <h1 class="section-title wow fadeInUp" data-wow-delay="0.2s">SHIFTING THROUGH YEARS</h1>
+          <div id="content" class="text-center">
+            <div class="slider" style="display: block; text-align: center"></div>
+            <br>
+            <h2 class="mapyear" style="color:white"></h2>
+            <h3 class="map-info" style="color:#D0D0D0"></h3>
+            <div id="map"></div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Shifting End -->
+
+<!-- Question 2 Start -->
+<section id="schedules" class="schedule section-padding" style="background-color: white">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="section-title-header text-center">
+          <h1 class="wow fadeInUp" data-wow-delay="0.2s">GUESS!!!!</h1>
+          <br> 
+          <h1 class="wow fadeInUp" data-wow-delay="0.2s">How many bedrooms is the most profitable listing?
+          </h1>
+          <br><br>
+        
+
+
+          <a class="fadeInLeft wow btn btn-common btn-lg" data-wow-delay=".6s" onclick="ShowBedroomInfo(1)"><h4 style="color:white ; margin:auto;">&nbsp 1 &nbsp</h4></a>
+          <a  class="fadeInDown wow btn btn-common btn-lg" data-wow-delay=".6s" onclick="ShowBedroomInfo(2)"> <h4 style="color:white ; margin:auto;">&nbsp 2 &nbsp</h4></a>
+          <a  class="fadeInRight wow btn btn-common btn-lg" data-wow-delay=".6s" onclick="ShowBedroomInfo(3)"> <h4 style="color:white ; margin:auto; "> 3++</h4></a>
+          <br><br><br>
+          <h3 class="bedroom-info-wrong" data-wow-delay=".5s" style="color:red; visibility: hidden">WRONG ANSWER !!!</h3>
+          <h3 class="bedroom-info-correct" style="color:green ; visibility: hidden">CORRECT !!!</h3>
+          <h3 class="bedroom-info" style="visibility: hidden"><b style="background-color:pink"> 1 bedroom</b>  
+            listing is the most profitable listing <br>in <b style="background-color:pink"> 46/80 </b> &nbsp suburbs in Victoria </h3>
+            <br>
+            <h5 class="bedroom-hide1" style="visibility: hidden; color:red">Discover More</h5>
+            <img class="bedroom-hide2" style="visibility:hidden; height: 150px; width: 150px" src="assets/img/giphy.gif" >
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <!-- Schedule Section End -->
+
+  <!-- Schedule Section Start -->
+  <section id="schedules" class="schedule section-padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="section-title-header text-center">
+            <h1 class="section-title wow fadeInUp" data-wow-delay="0.2s">THE MOST PROFITABLE AIRBNB's CHARACTERISTICS</h1>
+            <p class="wow fadeInDown" data-wow-delay="0.2s">Here is the ranking of the most profitable listings by looking at its location and number of bedrooms</p>
+          </div>
+        </div>
+      </div>
+      <div class="schedule-area row wow fadeInDown" data-wow-delay="0.3s">
+        <div class="schedule-tab-title col-md-3 col-lg-3 col-xs-12">
+          <div class="table-responsive">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="monday-tab" data-toggle="tab" href="#monday" role="tab" aria-controls="monday" aria-expanded="true">
+                  <div class="item-text">
+                    <h4>OVERALL</h4>
+                    <!-- <h5>14 February</h5> -->
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="tuesday-tab" data-toggle="tab" href="#tuesday" role="tab" aria-controls="tuesday">
+                  <div class="item-text">
+                    <h4>1 BED</h4>
+                    <!-- <h5>15 February</h5> -->
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="wednesday-tab" data-toggle="tab" href="#wednesday" role="tab" aria-controls="wednesday">
+                  <div class="item-text">
+                    <h4>2 BEDS</h4>
+                    
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="thursday-tab" data-toggle="tab" href="#thursday" role="tab" aria-controls="thursday">
+                  <div class="item-text">
+                    <h4>3++ BEDS</h4>
+                    <!-- <h5>17 February</h5> -->
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="schedule-tab-content col-md-9 col-lg-9 col-xs-12 clearfix">
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="monday" role="tabpanel" aria-labelledby="monday-tab">
+              <div id="accordion">
+                <div class="card">
+                  <div id="headingOne">
+                    <div class="collapsed card-header" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                      <div class="images-box">
+                        <img class="img-fluid" src="assets/img/speaker/speakers-1.jpg" alt="">
+                      </div>                     
+
+                      <h4>1 BEDROOM</h4>
+                      <h5 class="name">MELBOURNE</h5>
+                      &nbsp &nbsp<i class="fas fa-caret-down" style="color:red"></i>
+                    </div>
+
+                  </div>
+                  <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body ">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>LISTING</b></td>
+                            </tr>
+                            <tr>
+                              <td>Occupancy Rate</td>
+                              <td>:</td>
+                              <td>66%</td>
+                            </tr>
+
+                            <tr>
+                              <td>Expected Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 188,913</td>
+                            </tr>
+                          </table>
+                        </div>
+
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>RENT</b></td>
+                            </tr>
+                            <tr>
+                              <td>Weekly Rent Price</td>
+                              <td>:</td>
+                              <td>AUD$ 430</td>
+                            </tr>
+                            <tr>
+                              <td>Expected Rent Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 20,640</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="location">
+                        <br>
+                        <span>DIFFERENCES : AUD$ 168,273</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div id="headingTwo">
+                    <div class="collapsed card-header" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      <div class="images-box">
+                        <img class="img-fluid" src="assets/img/speaker/speakers-2.jpg" alt="">
+                      </div>                     
+                      <h4>2 BEDROOMS</h4>
+                      <h5 class="name">MELBOURNE</h5>
+                      &nbsp &nbsp<i class="fas fa-caret-down" style="color:red"></i>
+                    </div>
+                  </div>
+                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                   <div class="card-body ">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>LISTING</b></td>
+                            </tr>
+                            <tr>
+                              <td>Occupancy Rate</td>
+                              <td>:</td>
+                              <td>60%</td>
+                            </tr>
+                            
+                            <tr>
+                              <td>Expected Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 180,955</td>
+                            </tr>
+                          </table>
+                        </div>
+                        
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>RENT</b></td>
+                            </tr>
+                            <tr>
+                              <td>Weekly Rent Price</td>
+                              <td>:</td>
+                              <td>AUD$ 430</td>
+                            </tr>
+                            <tr>
+                              <td>Expected Rent Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 20,640</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="location">
+                        <br>
+                        <span>DIFFERENCES : AUD$ 160,315</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div id="headingThree">
+                    <div class="collapsed card-header" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      <div class="images-box">
+                        <img class="img-fluid" src="assets/img/speaker/speakers-3.jpg" alt="">
+                      </div>                     
+                      <h4>2 BEDROOM</h4>
+                      <h5 class="name">SOUTH WARF</h5>
+                      &nbsp &nbsp<i class="fas fa-caret-down" style="color:red"></i>
+                    </div>
+                  </div>
+                  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                   <div class="card-body ">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>LISTING</b></td>
+                            </tr>
+                            <tr>
+                              <td>Occupancy Rate</td>
+                              <td>:</td>
+                              <td>51%</td>
+                            </tr>
+                            
+                            <tr>
+                              <td>Expected Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 61,530</td>
+                            </tr>
+                          </table>
+                        </div>
+                        
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>RENT</b></td>
+                            </tr>
+                            <tr>
+                              <td>Weekly Rent Price</td>
+                              <td>:</td>
+                              <td>AUD$ 440</td>
+                            </tr>
+                            <tr>
+                              <td>Expected Rent Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 21,120</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="location">
+                        <br>
+                        <span>DIFFERENCES : AUD$ 40,410</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="tuesday" role="tabpanel" aria-labelledby="tuesday-tab">
+              <div id="accordion2">
+                <div class="card">
+                  <div id="headingOne1">
+                    <div class="collapsed card-header" data-toggle="collapse" data-target="#collapseOne1" aria-expanded="false" aria-controls="collapseOne1">
+                      <div class="images-box">
+                        <img class="img-fluid" src="assets/img/speaker/speakers-1.jpg" alt="">
+                      </div>                     
+
+                      <h4>MELBOURNE</h4>
+                      <h5 class="name">3000</h5>
+                      &nbsp &nbsp<i class="fas fa-caret-down" style="color:red"></i>
+                    </div>
+                  </div>
+                  <div id="collapseOne1" class="collapse" aria-labelledby="headingOne1" data-parent="#accordion2" aria-expanded="false">
+                    <div class="card-body ">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>LISTING</b></td>
+                            </tr>
+                            <tr>
+                              <td>Occupancy Rate</td>
+                              <td>:</td>
+                              <td>66%</td>
+                            </tr>
+
+                            <tr>
+                              <td>Expected Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 188,913</td>
+                            </tr>
+                          </table>
+                        </div>
+
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>RENT</b></td>
+                            </tr>
+                            <tr>
+                              <td>Weekly Rent Price</td>
+                              <td>:</td>
+                              <td>AUD$ 430</td>
+                            </tr>
+                            <tr>
+                              <td>Expected Rent Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 20,640</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="location">
+                        <br>
+                        <span>DIFFERENCES : AUD$ 168,273</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div id="headingTwo3">
+                    <div class="collapsed card-header" data-toggle="collapse" data-target="#collapseTwo3" aria-expanded="false" aria-controls="collapseTwo3">
+                      <div class="images-box">
+                        <img class="img-fluid" src="assets/img/speaker/speakers-2.jpg" alt="">
+                      </div>                     
+
+                      <h4>ST. KILDA</h4>
+                      <h5 class="name">3182</h5>
+                      &nbsp &nbsp<i class="fas fa-caret-down" style="color:red"></i>
+                    </div>
+                  </div>
+                  <div id="collapseTwo3" class="collapse" aria-labelledby="headingTwo3" data-parent="#accordion2">
+                     <div class="card-body ">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>LISTING</b></td>
+                            </tr>
+                            <tr>
+                              <td>Occupancy Rate</td>
+                              <td>:</td>
+                              <td>62.5%</td>
+                            </tr>
+                            
+                            <tr>
+                              <td>Expected Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 29,173</td>
+                            </tr>
+                          </table>
+                        </div>
+                        
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>RENT</b></td>
+                            </tr>
+                            <tr>
+                              <td>Weekly Rent Price</td>
+                              <td>:</td>
+                              <td>AUD$ 360</td>
+                            </tr>
+                            <tr>
+                              <td>Expected Rent Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 12,893</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="location">
+                        <br>
+                        <span>DIFFERENCES : AUD$ 11,893</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div id="headingTwo2">
+                    <div class="collapsed card-header" data-toggle="collapse" data-target="#collapseTwo2" aria-expanded="false" aria-controls="collapseTwo2">
+                      <div class="images-box">
+                        <img class="img-fluid" src="assets/img/speaker/speakers-3.jpg" alt="">
+                      </div>                     
+
+                      <h4>SOUTH WHARF</h4>
+                      <h5 class="name">3006</h5>
+                      &nbsp &nbsp<i class="fas fa-caret-down" style="color:red"></i>
+                    </div>
+                  </div>
+                  <div id="collapseTwo2" class="collapse" aria-labelledby="headingTwo2" data-parent="#accordion2">
+                    <div class="card-body ">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center; font-weight: bold"><b>LISTING</b></td>
+                            </tr>
+                            <tr>
+                              <td>Occupancy Rate</td>
+                              <td>:</td>
+                              <td>65%</td>
+                            </tr>
+
+                            <tr>
+                              <td>Expected Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 32,416</td>
+                            </tr>
+                          </table>
+                        </div>
+
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>RENT</b></td>
+                            </tr>
+                            <tr>
+                              <td>Weekly Rent Price</td>
+                              <td>:</td>
+                              <td>AUD$ 440</td>
+                            </tr>
+                            <tr>
+                              <td>Expected Rent Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 21,120</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="location">
+                        <br>
+                        <span>DIFFERENCES : AUD$ 11,296</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+            <div class="tab-pane fade" id="wednesday" role="tabpanel" aria-labelledby="wednesday-tab">
+              <div id="accordion3">
+                <div class="card">
+                  <div id="headingThree4">
+                    <div class="collapsed card-header" data-toggle="collapse" data-target="#collapseThree4" aria-expanded="false" aria-controls="collapseThree4">
+                      <div class="images-box">
+                        <img class="img-fluid" src="assets/img/speaker/speakers-1.jpg" alt="">
+                      </div>                     
+                      
+                      <h4>MELBOURNE</h4>
+                      <h5 class="name">3000</h5>
+                      &nbsp &nbsp<i class="fas fa-caret-down" style="color:red"></i>
+                    </div>
+                  </div>
+                  <div id="collapseThree4" class="collapse" aria-labelledby="headingThree4" data-parent="#accordion3">
+                    <div class="card-body ">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>LISTING</b></td>
+                            </tr>
+                            <tr>
+                              <td>Occupancy Rate</td>
+                              <td>:</td>
+                              <td>60%</td>
+                            </tr>
+                            
+                            <tr>
+                              <td>Expected Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 180,955</td>
+                            </tr>
+                          </table>
+                        </div>
+                        
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>RENT</b></td>
+                            </tr>
+                            <tr>
+                              <td>Weekly Rent Price</td>
+                              <td>:</td>
+                              <td>AUD$ 430</td>
+                            </tr>
+                            <tr>
+                              <td>Expected Rent Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 20,640</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="location">
+                        <br>
+                        <span>DIFFERENCES : AUD$ 160,315</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div id="headingOne3">
+                    <div class="collapsed card-header" data-toggle="collapse" data-target="#collapseOne3" aria-expanded="false" aria-controls="collapseOne3">
+                      <div class="images-box">
+                        <img class="img-fluid" src="assets/img/speaker/speakers-2.jpg" alt="">
+                      </div>                     
+                      
+                      <h4>SOUTH WHARF</h4>
+                      <h5 class="name">3006</h5>
+                      &nbsp &nbsp<i class="fas fa-caret-down" style="color:red"></i>
+                    </div>
+                  </div>
+                  <div id="collapseOne3" class="collapse" aria-labelledby="headingOne3" data-parent="#accordion3">
+                    <div class="card-body ">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>LISTING</b></td>
+                            </tr>
+                            <tr>
+                              <td>Occupancy Rate</td>
+                              <td>:</td>
+                              <td>51%</td>
+                            </tr>
+                            
+                            <tr>
+                              <td>Expected Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 61,530</td>
+                            </tr>
+                          </table>
+                        </div>
+                        
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>RENT</b></td>
+                            </tr>
+                            <tr>
+                              <td>Weekly Rent Price</td>
+                              <td>:</td>
+                              <td>AUD$ 440</td>
+                            </tr>
+                            <tr>
+                              <td>Expected Rent Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 21,120</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="location">
+                        <br>
+                        <span>DIFFERENCES : AUD$ 40,410</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div id="headingThree3">
+                    <div class="collapsed card-header" data-toggle="collapse" data-target="#collapseThree3" aria-expanded="false" aria-controls="collapseThree3">
+                      <div class="images-box">
+                        <img class="img-fluid" src="assets/img/speaker/speakers-3.jpg" alt="">
+                      </div>                     
+                      <h4>ST KILDA</h4>
+                      <h5 class="name">3182</h5>
+                      &nbsp &nbsp<i class="fas fa-caret-down" style="color:red"></i>
+                    </div>
+                  </div>
+                  <div id="collapseThree3" class="collapse" aria-labelledby="headingThree3" data-parent="#accordion3">
+                    <div class="card-body ">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>LISTING</b></td>
+                            </tr>
+                            <tr>
+                              <td>Occupancy Rate</td>
+                              <td>:</td>
+                              <td>54.6%</td>
+                            </tr>
+                            
+                            <tr>
+                              <td>Expected Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 35,017</td>
+                            </tr>
+                          </table>
+                        </div>
+                        
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>RENT</b></td>
+                            </tr>
+                            <tr>
+                              <td>Weekly Rent Price</td>
+                              <td>:</td>
+                              <td>AUD$ 360</td>
+                            </tr>
+                            <tr>
+                              <td>Expected Rent Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 17,280</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="location">
+                        <br>
+                        <span>DIFFERENCES : AUD$ 17,737</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+            <div class="tab-pane fade" id="thursday" role="tabpanel" aria-labelledby="thursday-tab">
+              <div id="accordion4">
+                <div class="card">
+                  <div id="headingOne">
+                    <div class="collapsed card-header" data-toggle="collapse" data-target="#collapseOne4" aria-expanded="false" aria-controls="collapseOne4">
+                      <div class="images-box">
+                        <img class="img-fluid" src="assets/img/speaker/speakers-1.jpg" alt="">
+                      </div>                     
+                      
+                      <h4>SOUTH WHARF</h4>
+                      <h5 class="name">3006</h5>
+                      &nbsp &nbsp<i class="fas fa-caret-down" style="color:red"></i>
+                    </div>
+                  </div>
+                  <div id="collapseOne4" class="collapse " aria-labelledby="headingOne" data-parent="#accordion4">
+                    <div class="card-body ">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>LISTING</b></td>
+                            </tr>
+                            <tr>
+                              <td>Occupancy Rate</td>
+                              <td>:</td>
+                              <td>40%</td>
+                            </tr>
+                            
+                            <tr>
+                              <td>Expected Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 17,905</td>
+                            </tr>
+                          </table>
+                        </div>
+                        
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>RENT</b></td>
+                            </tr>
+                            <tr>
+                              <td>Weekly Rent Price</td>
+                              <td>:</td>
+                              <td>AUD$ 440</td>
+                            </tr>
+                            <tr>
+                              <td>Expected Rent Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 21,120</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="location">
+                        <br>
+                        <span>DIFFERENCES : AUD$ -3,214</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div id="headingTwo">
+                    <div class="collapsed card-header" data-toggle="collapse" data-target="#collapseTwo4" aria-expanded="false" aria-controls="collapseTwo4">
+                      <div class="images-box">
+                        <img class="img-fluid" src="assets/img/speaker/speakers-2.jpg" alt="">
+                      </div>                     
+
+                      <h4>ST KILDA</h4>
+                      <h5 class="name">3182</h5>
+                      &nbsp &nbsp<i class="fas fa-caret-down" style="color:red"></i>
+                    </div>
+                  </div>
+                  <div id="collapseTwo4" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion4">
+                    <div class="card-body ">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>LISTING</b></td>
+                            </tr>
+                            <tr>
+                              <td>Occupancy Rate</td>
+                              <td>:</td>
+                              <td>51%</td>
+                            </tr>
+                            
+                            <tr>
+                              <td>Expected Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 12,434</td>
+                            </tr>
+                          </table>
+                        </div>
+                        
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>RENT</b></td>
+                            </tr>
+                            <tr>
+                              <td>Weekly Rent Price</td>
+                              <td>:</td>
+                              <td>AUD$ 360</td>
+                            </tr>
+                            <tr>
+                              <td>Expected Rent Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 17,280</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="location">
+                        <br>
+                        <span>DIFFERENCES : AUD$ -3,845</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div id="headingFour4">
+                    <div class="collapsed card-header" data-toggle="collapse" data-target="#collapseFour4" aria-expanded="false" aria-controls="collapseFour4">
+                      <div class="images-box">
+                        <img class="img-fluid" src="assets/img/speaker/speakers-3.jpg" alt="">
+                      </div>                     
+                      
+                      <h4>MELBOURNE</h4>
+                      <h5 class="name">3000</h5>
+                      &nbsp &nbsp<i class="fas fa-caret-down" style="color:red"></i>
+                    </div>
+                  </div>
+                  <div id="collapseFour4" class="collapse" aria-labelledby="headingFour4" data-parent="#accordion4">
+                   <div class="card-body ">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>LISTING</b></td>
+                            </tr>
+                            <tr>
+                              <td>Occupancy Rate</td>
+                              <td>:</td>
+                              <td>52%</td>
+                            </tr>
+                            
+                            <tr>
+                              <td>Expected Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 14,979</td>
+                            </tr>
+                          </table>
+                        </div>
+                        
+                        <div class="col-md-6">
+                          <table>
+                            <tr>
+                              <td colspan="3" style="text-align: center"><b>RENT</b></td>
+                            </tr>
+                            <tr>
+                              <td>Weekly Rent Price</td>
+                              <td>:</td>
+                              <td>AUD$ 430</td>
+                            </tr>
+                            <tr>
+                              <td>Expected Rent Revenue</td>
+                              <td>:</td>
+                              <td>AUD$ 20,640</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="location">
+                        <br>
+                        <span>DIFFERENCES : AUD$ -5,660</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+         
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Schedule Section End -->
+
+
+
+  <!-- Dashboard Start -->
+  <section id="" class="section-padding">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="section-title-header text-center">
+            <h1 class="section-title wow fadeInUp" data-wow-delay="0.2s">AIRBNB COMPARED TO RENT</h1>
+            
+            <div class="row">
+              <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                <div id="map1"></div>
+              </div>
+              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" id="general-info" style= "background-color: white;">
+                
+
+                <div class="section" id="section-hidden" style=" visibility: hidden">
+                  <br>
+                  <h3 class="headerinfo" >General Information</h3>
+                  <table>
+                    <tr >
+                      <td style="text-align:left;">Name</td>
+                      <td>: </td>
+                      <td class="info-area" style="text-align: left;"></td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: left">Zipcode</td>
+                      <td>: </td>
+                      <td class="info-zipcode" style="text-align: left"></td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: left">Difference on Expected Revenue</td>
+                      <td>: </td>
+                      <td class="info-rev-plus" style="text-align: left;"></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" class="info-profit"></td>
+                    </tr>
+                  </table>
+                </div>
+                <h3 id="general-info-title">Click Map!</h3>
+                <hr>
+                <div class="section2">
+                  <h3 id="general-info-title-beds" style="visibility: hidden">Bedrooms Information</h3>
+                </div>
+
+                <div id='chartBedRate' ></div>
+              </div>
+            </div>
+          </div>
+          <div id="section-hidden2" style="visibility: hidden">
+          ( Double click on the same suburb to Zoom out maps )
+        </div>
+        </div>
+
+      </div>
+    </div>
+  </section>    
+  <!-- Dashboard End -->
+
+    <!-- CONCLUSION Start -->
+  <section id="pricing" class="schedule section-padding" style="background-image: url('');background-color:#302f2f">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="section-title-header text-center">
+            <div class="section-title wow fadeInUp" data-wow-delay="0.2s"><h1 style="color:#E81F62">CONCLUSION</h1></div>
+            <br><br>
+            <div class="wow fadeInDown" data-wow-delay="0.2s" >
+              <h4 style="color:#e55485">There are only some suburbs with<br> <b style="color:white; " >particular characteristics,</b>that is 
+              <b style="color:white; " ><br> more profitable</b>
+              than yearly basis rent</h4>
+            </div>
+            <br><br><br>
+            <div class="wow fadeInDown" data-wow-delay="0.2s" ><h4 style="color:#e55485"><b style="color:#E81F62; " >ALSO,</b><br>Managing Airbnb needs <b style="color:white; " >more effort</b><br> rather than renting the apartment</h4></div>
+            <br><br><br>
+            <div class="wow fadeInDown" data-wow-delay="0.2s" ><h4 style="color:#e55485"><b style="color:#E81F62; " >THEREFORE,</b> <br>If Ones want to list their apartment in AIRBNB,<br> <b style="color:white; " >READING</b> and <b style="color:white; " >EXPLORING</b> this visualization is a <b style="color:white; " >MUST</b> </h4></div>
+            <br><br><br>
+          </div>
+         
+        </div>
+
+      </div>
+    </div>
+</section>
+<!-- CONCLUSION End -->
+
+
+  <!-- Footer Section Start -->
+  <footer class="footer-area section-padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="0.2s">
+          <h3 style="color:#E81F62">AIRBNB PROJECT</h3>
+          <p>
+            A Melbourne's Airbnb Exploration and Visualization Project built using javacript, jQuery, AJAX, and D3.
+          </p>
+          <br>
+          
+        </div>
+        <div class="col-md-6 col-lg-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="0.35s">
+          <h3 style="color:white">DATA SOURCE</h3>
+          <li>
+            <a href="http://insideairbnb.com/get-the-data.html" style="color:white">Airbnb</a>
+          </li>
+          <li>
+            <a href="https://www.tra.gov.au/International/international-tourism-trends" style="color:white">Tourist Trend</a>
+          </li>
+            <li>
+            <a href="https://data.gov.au/dataset/ds-dga-af33dd8c-0534-4e18-9245-fc64440f742e/distribution/dist-dga-3b946968-319e-4125-8971-2a33d5bf000c/details?q=" style="color:white">Victoria Shape File</a>
+          </li>
+          <li>
+            <a href="http://download.geonames.org/export/zip/" style="color:white">Victoria Zipcode</a>
+          </li>
+            
+
+
+            
+        </div>
+
+
+
+
+        <div class="col-md-6 col-lg-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="0.5s">
+          <h3 style="color:white">AUTHOR</h3>
+          <p>Liliana Ester</p>
+          <p>29895154</p>
+          <br><br>
+ 
+        </div>
+
+        <div class="col-md-6 col-lg-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="0.8s">
+           <h3 class="widget-title" style="color:white">ACCOUNT</h3>
+          <div class="widget">
+           
+            <ul class="footer-social">
+              <li><a class="linkedin" href="https://www.linkedin.com/in/lilianaester/"><i class="lni-linkedin-filled"></i></a></li>
+              <li><a class="github" href="https://github.com/liliesterw"><i class="lni-github"></i></a></li>
+              <li><a class="facebook" href="https://www.facebook.com/liliana.ester.5"><i class="lni-facebook-filled"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Footer Section End -->
+
+  <div id="copyright">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="site-info">
+            <p>© Designed and Developed by <a href="http://uideck.com" rel="nofollow">UIdeck</a></p>
+          </div>      
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Go to Top Link -->
+  <a href="#" class="back-to-top">
+   <i class="lni-chevron-up"></i>
+ </a>
+
+ <div id="preloader">
+  <div class="sk-circle">
+    <div class="sk-circle1 sk-child"></div>
+    <div class="sk-circle2 sk-child"></div>
+    <div class="sk-circle3 sk-child"></div>
+    <div class="sk-circle4 sk-child"></div>
+    <div class="sk-circle5 sk-child"></div>
+    <div class="sk-circle6 sk-child"></div>
+    <div class="sk-circle7 sk-child"></div>
+    <div class="sk-circle8 sk-child"></div>
+    <div class="sk-circle9 sk-child"></div>
+    <div class="sk-circle10 sk-child"></div>
+    <div class="sk-circle11 sk-child"></div>
+    <div class="sk-circle12 sk-child"></div>
+  </div>
+</div>
+<!-- Question 2 End -->
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="assets/js/jquery-min.js"></script>
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/jquery.countdown.min.js"></script>
+<script src="assets/js/jquery.nav.js"></script>
+<script src="assets/js/jquery.easing.min.js"></script>
+<script src="assets/js/wow.js"></script>
+<script src="assets/js/jquery.slicknav.js"></script>
+<script src="assets/js/nivo-lightbox.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+<script>
+  // Slider 
+  var jsonData;
+  var bar = progressBar()
+  var percentage_yes = 0
+  var percentage_total = 0
+  var qst1 = false
+  var qst2 = false
+
+  $.ajax({
+    dataType: "json",
+    url: "d3/data/response1.json",
+    async: false,
+    success: function(collection){
+      percentage_yes = collection["yes"]
+      percentage_total = collection["total"]
+      console.log(percentage_total,percentage_yes)
+    }
+  })
+
+  bar 
+  .currentStatus('started')
+  .colorScale(colorScale)
+  .segmentWidth(parseInt(percentage_yes / percentage_total * 100));
+
+  $(function() {
+    var $document = $(document);
+    var selector = '[data-rangeslider]';
+    var $element = $(selector);
+        // For ie8 support
+        var textContent = ('textContent' in document) ? 'textContent' : 'innerText';
+        // Example functionality to demonstrate a value feedback
+        function valueOutput(element) {
+          var value = element.value;
+          var output = element.parentNode.getElementsByTagName('output')[0] || element.parentNode.parentNode.getElementsByTagName('output')[0];
+          output[textContent] = value;
+        }
+        $document.on('input', 'input[type="range"], ' + selector, function(e) {
+          valueOutput(e.target);
+        });
+        // Example functionality to demonstrate disabled functionality
+        $document .on('click', '#js-example-disabled button[data-behaviour="toggle"]', function(e) {
+          var $inputRange = $(selector, e.target.parentNode);
+          if ($inputRange[0].disabled) {
+            $inputRange.prop("disabled", false);
+          }
+          else {
+            $inputRange.prop("disabled", true);
+          }
+          $inputRange.rangeslider('update');
+        });
+        // Example functionality to demonstrate programmatic value changes
+        $document.on('click', '#js-example-change-value button', function(e) {
+          var $inputRange = $(selector, e.target.parentNode);
+          var value = $('input[type="number"]', e.target.parentNode)[0].value;
+          $inputRange.val(value).change();
+        });
+        // Example functionality to demonstrate programmatic attribute changes
+        $document.on('click', '#js-example-change-attributes button', function(e) {
+          var $inputRange = $(selector, e.target.parentNode);
+          var attributes = {
+            min: $('input[name="min"]', e.target.parentNode)[0].value,
+            max: $('input[name="max"]', e.target.parentNode)[0].value,
+            step: $('input[name="step"]', e.target.parentNode)[0].value
+          };
+          $inputRange.attr(attributes);
+          $inputRange.rangeslider('update', true);
+        });
+        // Example functionality to demonstrate destroy functionality
+        $document
+        .on('click', '#js-example-destroy button[data-behaviour="destroy"]', function(e) {
+          $(selector, e.target.parentNode).rangeslider('destroy');
+        })
+        .on('click', '#js-example-destroy button[data-behaviour="initialize"]', function(e) {
+          $(selector, e.target.parentNode).rangeslider({ polyfill: false });
+        });
+        // Example functionality to test initialisation on hidden elements
+        $document
+        .on('click', '#js-example-hidden button[data-behaviour="toggle"]', function(e) {
+          var $container = $(e.target.previousElementSibling);
+          $container.toggle();
+        });
+        // Basic rangeslider initialization
+
+      });
+
+  var svg = d3.select('.progress')
+  .append('svg')
+  .attr('height', 100)
+  .attr('width', 600);
+
+  var states = ['started', 'inProgress', 'completed'],
+  segmentWidth = parseInt(parseInt(percentage_yes / percentage_total * 100)),
+  currentState = 'started';
+
+
+
+  var colorScale = d3.scale.ordinal()
+  .domain(states)
+  .range(['yellow', 'orange', 'green']);
+
+
+
+  svg.datum(states)
+  .call(bar);
+
+  function moveProgressBar(val){
+    if( qst1== false){
+
+
+    percentage_yes = parseInt(percentage_yes) + val
+    percentage_total = parseInt(percentage_total) + parseInt(1)
+
+    $.ajax({  
+      type: 'POST',  
+      url: 'save.php', 
+      data: { text1: percentage_yes, text2: percentage_total },
+      success: function(response) {
+        console.log(response);
+      }
+    });
+
+    $('.progress').css({
+      'visibility': 'visible'
+    });
+    $('.progressText').css({
+      'visibility': 'visible'
+    });
+    $('.progressText2').css({
+      'visibility': 'visible'
+    }); 
+
+    document.getElementById("progressText2").innerHTML = percentage_yes + "/" + percentage_total + " people say yes";
+    state='completed'
+    bar.moveProgressBar(state)
+    qst1 = true
+    }
+  };
+
+  function ShowBedroomInfo(val){
+    if (qst2 == false){
+
+    $('.bedroom-info').css({
+      'visibility': 'visible'
+    });
+
+    $('.bedroom-hide1').css({
+      'visibility': 'visible'
+    });
+
+    $('.bedroom-hide2').css({
+      'visibility': 'visible'
+    });
+    if(val == 1){
+      $('.bedroom-info-correct').css({
+        'visibility': 'visible'
+      });
+    }
+    else{
+      $('.bedroom-info-wrong').css({
+        'visibility': 'visible'
+      });
+    }
+    qst2 = true
+  }
+
+  };
+
+
+
+</script>
+<script>
+
+  var config1 = liquidFillGaugeDefaultSettings();
+  config1.circleColor = "#D4AB6A";
+  config1.textColor = "#553300";
+  config1.waveTextColor = "#805615";
+  config1.waveColor = "#AA7D39";
+  config1.circleThickness = 0.08;
+  config1.textVertPosition = 0.2;
+  config1.waveAnimateTime = 1000;
+  var gauge1= loadLiquidFillGauge("fillgauge1", 60, config1,2015,5408);
+
+  var config2 = liquidFillGaugeDefaultSettings();
+  config2.circleColor = "#D4AB6A";
+  config2.textColor = "#553300";
+  config2.waveTextColor = "#805615";
+  config2.waveColor = "#AA7D39";
+  config2.circleThickness = 0.08;
+  config2.textVertPosition = 0.2;
+  config2.waveAnimateTime = 1000;
+  var gauge2= loadLiquidFillGauge("fillgauge2", 73, config2,2016,8633);
+
+
+  var config3 = liquidFillGaugeDefaultSettings();
+  config3.circleColor = "#D4AB6A";
+  config3.textColor = "#553300";
+  config3.waveTextColor = "#805615";
+  config3.waveColor = "#AA7D39";
+  config3.circleThickness = 0.08;
+  config3.textVertPosition = 0.2;
+  config3.waveAnimateTime = 2000;
+  var gauge3= loadLiquidFillGauge("fillgauge3", 55, config3,2017,14305);
+
+  var config4 = liquidFillGaugeDefaultSettings();
+  config4.circleColor = "#D4AB6A";
+  config4.textColor = "#553300";
+  config4.waveTextColor = "#805615";
+  config4.waveColor = "#AA7D39";
+  config4.circleThickness = 0.08;
+  config4.textVertPosition = 0.2;
+  config4.waveAnimateTime = 2000;
+  var gauge4= loadLiquidFillGauge("fillgauge4", 48, config4,2018,20427);
+
+  var config5 = liquidFillGaugeDefaultSettings();
+  config5.circleColor = "#D4AB6A";
+  config5.textColor = "#553300";
+  config5.waveTextColor = "#805615";
+  config5.waveColor = "#AA7D39";
+  config5.circleThickness = 0.08;
+  config5.textVertPosition = 0.2;
+  config5.waveAnimateTime = 2000;
+  var gauge5= loadLiquidFillGauge("fillgauge5", 46, config5,2019,22909);
+
+  function NewValue(){
+    if(Math.random() > .5){
+      return Math.round(Math.random()*100);
+    } else {
+      return (Math.random()*100).toFixed(1);
+    }
+  }
+
+// video
+var $video  = $('video'),
+$window = $(window); 
+
+$(window).resize(function(){
+
+  var height = $window.height();
+  $video.css('height', height);
+
+  var videoWidth = $video.width(),
+  windowWidth = $window.width();
+
+
+}).resize();
+</script>
+<!-- SCRIPT FOR INCREASE PERCENTAGE -->
+<script>
+  d3.csv('d3/data/increase_percentage.csv', function(error, data) {
+    data.forEach(function (d) {
+      d.year = +d.year;
+      d.tourist = +d.tourist;
+      d.listing = +d.listing;
+    });
+
+    var chart = makeLineChart(data, 'year', {
+      'tourist': {column: 'tourist'},
+      'listing': {column: 'listing'}},
+      {xAxis: 'Years', yAxis: 'Percentage'})
+    chart.bind("#chart-line1");
+    chart.render();
+
+  });
+  var data_heat = [];
+  d3.csv('d3/data/occupation_rate.csv', function(error, data) {
+    for(var i = 0; i < data.length; i++){
+      data_heat[i] = {month:data[i].month, year:data[i].year,percentage:data[i].percentage}
+    }
+
+    var chart = circularHeatChart()
+    .innerRadius(70)
+    .range(["white", "#4C30A5"])
+    .radialLabels(["2015","2016","2017","2018","2019"])
+    .segmentLabels(["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"]);
+
+    chart.accessor(function(d) {return d.percentage;})
+    ;
+
+    d3.select('#chart')
+    .selectAll('svg')
+    .data([data_heat])
+    .enter()
+    .append('svg')
+    .attr("width", 500)
+    .attr("height", 500)
+    .call(chart);
+
+    d3.selectAll("#chart path").on('mouseover', function() {
+      var d = d3.select(this).data()[0];
+      console.log("df")
+
+      if(Math.round(d.percentage * 100) == 0 ){
+        d3.select("#info").text("Sorry, we don't have the data :(");
+      }
+      else {
+        d3.select("#info").text("Occupation rate : "+ Math.round(d.percentage * 100) + "% on " + d.month +" " + d.year);  
+      }
+      
+    });
+
+    d3.selectAll("#chart svg").on('mouseout', function() {
+      d3.select("#info").text('hover the chart');  
+    });
+
+  });
+
+// bed rate
+
+</script>
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</html>
