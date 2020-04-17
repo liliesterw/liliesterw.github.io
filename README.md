@@ -7,20 +7,20 @@ Based on that, this visualization is being made to give knowledge for both Airbn
 
 Secondly, by considering that the yearly basis apartment rent price and demand in Melbourne is also high, we want to compare its revenue to the Airbnb’s revenue. After all, we want to see whether listing in Airbnb is a good decision or not.
 
-This visualization is built with :
-- Bootstrap theme from https://uideck.com/
-- D3.js
-- Javascript
-- JQuery
-- AJAX
-- CSS
+### Built With:
+* Bootstrap theme from https://uideck.com/
+* D3.js
+* Javascript
+* JQuery
+* AJAX
+* CSS
 
 
-D3 Libraries :
-- MultiLine Chart
-- Circular HeatMap
-- Liquid Fill Gauge Chart
-- Chloropleth Map with geoJson
+### D3 Library:
+* MultiLine Chart
+* Circular HeatMap
+* Liquid Fill Gauge Chart
+* Chloropleth Map with geoJson
 
-Check this out https://liliesterw.github.io/
+<h2>Check this out https://liliesterw.github.io/</h2>
 
